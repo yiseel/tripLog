@@ -12,7 +12,8 @@
   --line: rgba(47, 107, 128, 0.14);
   --shadow: 0 18px 40px rgba(33, 79, 96, 0.12);
   --radius: 18px;
-  --font-display: "Moirai One", "Nanum Gothic", sans-serif;
+  /* 목록 hero의 "Trip Log" 로고 — Chango(통통하고 둥근 두꺼운 글씨, 굵기 400 하나뿐) */
+  --font-display: "Chango", "Nanum Gothic", cursive;
   --font-body: 'Chiron GoRound TC', "Nanum Gothic", sans-serif;
   color: var(--ink);
   background: var(--mist);
@@ -70,11 +71,16 @@ em {
   margin: 0;
   font-family: var(--font-display);
   font-style: normal;
-  font-size: clamp(3.6rem, 7.44vw, 5.02rem);
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 0.95;
-  color: inherit;
+  font-size: clamp(2.6rem, 7.44vw, 5.02rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.15;
+  color: var(--sea-deep);
+  /* 일러스트의 비행기처럼 흰 테두리 스티커 느낌 */
+  text-shadow:
+    2px 2px 0 #fff, -2px 2px 0 #fff, 2px -2px 0 #fff, -2px -2px 0 #fff,
+    0 2px 0 #fff, 0 -2px 0 #fff, 2px 0 0 #fff, -2px 0 0 #fff,
+    3px 5px 0 rgba(47, 107, 128, 0.18);
 }
 
 .brand--sm {
@@ -232,18 +238,19 @@ em {
   --hero-to: #ddd2fa;
   /* 배경이 밝아 흰 글씨 대비가 낮으므로 짙은 글씨 사용 */
   color: var(--ink);
-  background: linear-gradient(170deg, var(--hero-from) 0%, var(--hero-to) 100%);
+  /* 일러스트 배경(src/assets/hero-bg.png) — 그라데이션은 이미지 로딩 전 바탕 */
+  background:
+    url('./assets/hero-bg.png') center 40% / cover no-repeat,
+    linear-gradient(170deg, var(--hero-from) 0%, var(--hero-to) 100%);
   animation: hero-in 0.9s ease both;
   padding: 20px 0 0;
 }
 
-/* 은은한 빛 번짐으로 사진 없이도 깊이감 */
+/* 배경 일러스트 위 왼쪽(제목·검색 영역)을 살짝 밝혀 글씨 대비 확보 */
 .hero__veil {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.45), transparent 45%),
-    radial-gradient(circle at 10% 110%, rgba(255, 255, 255, 0.3), transparent 50%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.25) 45%, transparent 75%);
   pointer-events: none;
 }
 
@@ -278,7 +285,6 @@ em {
 .hero h1 {
   margin: 0;
   max-width: 14ch;
-  /* font-family: var(--font-display); */
   font-size: clamp(1.49rem, 3.26vw, 2.23rem);
   font-weight: 600;
   line-height: 1.2;
@@ -370,7 +376,7 @@ em {
   margin: calc(var(--cta-height) / -2) auto 0;
   display: flex;
   justify-content: center;
-  animation: rise 0.8s 0.25s ease both;
+  /* animation: rise 0.8s 0.25s ease both; */
   margin-bottom: 20px;
 }
 
@@ -497,7 +503,6 @@ em {
 
 .trip-card__title {
   margin: 0;
-  /* font-family: var(--font-display); */
   font-size: 1.21rem;
   letter-spacing: -0.02em;
 }
@@ -734,7 +739,6 @@ em {
 }
 
 .back-link {
-  /* font-family: var(--font-display); */
   font-weight: 600;
   color: var(--sea);
 }
@@ -759,7 +763,6 @@ em {
 
 .meta-panel__intro h1 {
   margin: 0.35rem 0 0.4rem;
-  /* font-family: var(--font-display); */
   font-size: clamp(1.67rem, 3.72vw, 2.42rem);
   letter-spacing: -0.03em;
   line-height: 1.15;
@@ -2116,7 +2119,6 @@ em {
 
 .timeline-section__head h2 {
   margin: 0 0 0.35rem;
-  /* font-family: var(--font-display); */
   font-size: 1.44rem;
 }
 
@@ -2518,7 +2520,6 @@ em {
 
 .day-column__header h3 {
   margin: 0;
-  /* font-family: var(--font-display); */
   font-size: 1.07rem;
 }
 
@@ -2690,7 +2691,6 @@ em {
 
 .modal__header h2 {
   margin: 0;
-  /* font-family: var(--font-display); */
   font-size: 1.3rem;
 }
 
