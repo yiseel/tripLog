@@ -76,13 +76,13 @@ export function TripListPage({ api, auth }: Props) {
     <div className="page page--list">
       <header className="hero">
         <div className="hero__veil" aria-hidden="true" />
-        <div className="hero__auth">
-          <AuthButton auth={auth} />
-        </div>
         <div className="hero__inner">
+          {/* 소개 문구 + 로그인 버튼 한 줄, 그 아래 로고 */}
+          <div className="hero__top">
+            <p className="hero__lead">일자별로 장소를 모아, 여행을 한눈에 남기세요.</p>
+            <AuthButton auth={auth} />
+          </div>
           <p className="brand">Trip Log</p>
-          {/* <h1>나의 여행 기록</h1> */}
-          <p className="hero__lead">일자별로 장소를 모아, 여행을 한눈에 남기세요.</p>
 
           <div className="trip-search" role="search">
             <select
