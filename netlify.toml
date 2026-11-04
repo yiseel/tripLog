@@ -1,0 +1,18 @@
+# Git으로 연결해 배포할 때의 빌드 설정.
+# 환경 변수(VITE_*)는 Netlify 사이트 설정의 Environment variables에 넣는다.
+# 폴더를 직접 올릴 때는 로컬에서 npm run build 한 뒤 dist를 올린다.
+# 그때는 public/_redirects가 dist에 들어가 상세 주소 새로고침이 동작한다.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # 지도·Supabase 공개 키는 브라우저 번들에 들어가는 것이 정상이다.
+  SECRETS_SCAN_OMIT_KEYS = "VITE_KAKAO_MAP_KEY,VITE_GEOAPIFY_KEY,VITE_SUPABASE_URL,VITE_SUPABASE_PUBLISHABLE_KEY,VITE_SUPABASE_ANON_KEY"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

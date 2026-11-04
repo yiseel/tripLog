@@ -1,0 +1,3090 @@
+:root {
+  --ink: #2b3a3f;
+  --ink-soft: #5a6a70;
+  --sea: #2f6b80;
+  --sea-deep: #214f60;
+  --foam: #bde3c3;
+  --mist: #fbfaf2;
+  --sand: #f8e5ba;
+  --gold: #a3ccda;
+  --gold-soft: #f5d2d2;
+  --danger: #b42318;
+  --line: rgba(47, 107, 128, 0.14);
+  --shadow: 0 18px 40px rgba(33, 79, 96, 0.12);
+  --radius: 18px;
+  --font-display: "Moirai One", "Nanum Gothic", sans-serif;
+  --font-body: 'Chiron GoRound TC', "Nanum Gothic", sans-serif;
+  color: var(--ink);
+  background: var(--mist);
+  font-family: var(--font-body);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  /* 기본 글자 15px (따로 크기를 주지 않은 글자·입력칸) */
+  font-size: 0.9375rem;
+  background:
+    radial-gradient(1200px 500px at 10% -10%, rgba(245, 210, 210, 0.6), transparent 55%),
+    radial-gradient(900px 480px at 100% 0%, rgba(189, 227, 195, 0.6), transparent 55%),
+    linear-gradient(180deg, #fbfaf2 0%, #fcfbe6 48%, #eef6f8 100%);
+  background-attachment: fixed;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+textarea {
+  resize: none; 
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+em {
+  font-style: normal;
+  color: #c47a7a;
+}
+
+.brand {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: normal;
+  font-size: clamp(3.6rem, 7.44vw, 5.02rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: inherit;
+}
+
+.brand--sm {
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sea);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: 1px solid transparent;
+  /* border-radius: 999px; */
+  border-radius: 16px;
+  padding: 0.7rem 1.2rem;
+  background: var(--sea);
+  color: #fff;
+  cursor: pointer;
+  /* transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease; */
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  background: var(--sea-deep);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* #30AFFF 는 밝아서 흰 글씨 대비가 낮으므로 짙은 남색 글씨 사용 */
+.btn--primary {
+  background: var(--gold);
+  color: #1d3d48;
+  font-weight: 600;
+  /* box-shadow: 0 10px 24px rgba(163, 204, 218, 0.5); */
+}
+
+.btn--primary:hover {
+  background: #8fbfd0;
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--sea);
+  box-shadow: none;
+}
+
+.btn--ghost:hover {
+  background: rgba(47, 107, 128, 0.06);
+}
+
+.btn--small {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.84rem;
+}
+
+.btn--lg {
+  padding: 0.95rem 1.5rem;
+  font-size: 0.98rem;
+}
+
+.text-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.32rem 0.75rem;
+  background: rgba(255, 255, 255, 0.95);
+  cursor: pointer;
+  color: var(--sea);
+  font-size: 0.76rem;
+  font-weight: 500;
+  line-height: 1.2;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.text-btn:hover {
+  background: var(--foam);
+  border-color: rgba(47, 107, 128, 0.35);
+  color: var(--sea-deep);
+}
+
+.text-btn:active {
+  transform: translateY(1px);
+}
+
+.text-btn--danger {
+  color: var(--danger);
+  border-color: rgba(180, 35, 24, 0.22);
+}
+
+.text-btn--danger:hover {
+  background: rgba(180, 35, 24, 0.08);
+  border-color: rgba(180, 35, 24, 0.4);
+  color: var(--danger);
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  color: var(--ink-soft);
+}
+
+.icon-btn:hover {
+  background: rgba(47, 107, 128, 0.08);
+}
+
+/* Hero / List */
+/* 화면 높이에 고정하고 .list-scroll 만 스크롤 */
+.page--list {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.hero,
+.hero-cta {
+  flex-shrink: 0;
+}
+
+.list-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.hero {
+  position: relative;
+  min-height: min(16vh, 210px);
+  display: grid;
+  place-items: end start;
+  overflow: hidden;
+  /* 파스텔 그라데이션 — 다른 조합으로 바꾸려면 두 변수만 교체
+     Gradient 1: #f8d675 → #f98a8b   Gradient 2: #78d6b9 → #ffd6a1
+     Gradient 3: #a879e4 → #7ecdf4   Gradient 4: #e5a273 → #ddd2fa */
+  --hero-from: #7ECDF4;
+  --hero-to: #ddd2fa;
+  /* 배경이 밝아 흰 글씨 대비가 낮으므로 짙은 글씨 사용 */
+  color: var(--ink);
+  background: linear-gradient(170deg, var(--hero-from) 0%, var(--hero-to) 100%);
+  animation: hero-in 0.9s ease both;
+  padding: 20px 0 0;
+}
+
+/* 은은한 빛 번짐으로 사진 없이도 깊이감 */
+.hero__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.45), transparent 45%),
+    radial-gradient(circle at 10% 110%, rgba(255, 255, 255, 0.3), transparent 50%);
+  pointer-events: none;
+}
+
+/* hero 우측 상단 로그인/로그아웃 */
+.hero__auth {
+  position: absolute;
+  top: 1rem;
+  right: max(1.25rem, calc((100% - 1100px) / 2));
+  z-index: 2;
+}
+
+.auth-btn {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(47, 107, 128, 0.25);
+  white-space: nowrap;
+}
+
+.auth-btn:hover {
+  background: #fff;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  width: min(1100px, calc(100% - 2.5rem));
+  margin: 0 auto 4.5rem;
+  display: grid;
+  gap: 1rem;
+  /* animation: rise 0.8s 0.15s ease both; */
+}
+
+.hero h1 {
+  margin: 0;
+  max-width: 14ch;
+  /* font-family: var(--font-display); */
+  font-size: clamp(1.49rem, 3.26vw, 2.23rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.hero__lead {
+  margin: 0.5rem 0 0.5rem;
+  max-width: 34ch;
+  font-size: 0.98rem;
+  color: var(--ink-soft);
+}
+
+/* 연도 / 제목 검색 (새 여행 작성 버튼 바로 위) */
+.trip-search {
+  display: grid;
+  /* 연도 · 국내/해외 · 제목 검색 */
+  grid-template-columns: 9rem 8rem 1fr;
+  gap: 0.6rem;
+}
+
+.trip-search__year,
+.trip-search__query {
+  width: 100%;
+  height: 2.75rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0 0.9rem;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--ink);
+  font: inherit;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trip-search__year {
+  cursor: pointer;
+}
+
+.trip-search__year:focus,
+.trip-search__query:focus {
+  border-color: rgba(47, 107, 128, 0.45);
+  box-shadow: 0 0 0 3px rgba(47, 107, 128, 0.12);
+}
+
+/* 목록 위 결과 줄: [전체 여행 (N)] ……… [1 / 3 페이지] */
+.trip-search__count {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0 0 0.9rem;
+  padding: 0 0.2rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.trip-search__count p {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  color: var(--sea-deep);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.trip-search__count strong {
+  min-width: 1.6rem;
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #1d3d48;
+  font-size: 0.78rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.trip-search__count span {
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-cta {
+  --cta-height: 3.4rem;
+  position: relative;
+  z-index: 3;
+  width: min(1100px, calc(100% - 2.5rem));
+  /* 버튼 높이의 절반만큼 위로 올려 경계선에 중앙이 오도록 */
+  margin: calc(var(--cta-height) / -2) auto 0;
+  display: flex;
+  justify-content: center;
+  animation: rise 0.8s 0.25s ease both;
+  margin-bottom: 20px;
+}
+
+.hero-cta .btn {
+  width: 100%;
+  height: var(--cta-height);
+  padding-block: 0;
+  box-shadow: 0 14px 30px rgba(33, 79, 96, 0.3);
+}
+
+.list-main {
+  width: min(1100px, calc(100% - 2.5rem));
+  margin: 1.75rem auto 4rem;
+  position: relative;
+  z-index: 2;
+}
+
+.trip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.1rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 1.75rem;
+}
+
+.pagination__item {
+  min-width: 2.3rem;
+  height: 2.3rem;
+  padding: 0 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--sea);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.pagination__item:hover:not(:disabled):not(.pagination__item--active) {
+  background: rgba(47, 107, 128, 0.06);
+}
+
+.pagination__item--active {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: #1d3d48;
+  font-weight: 700;
+  cursor: default;
+}
+
+.pagination__item:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* Trip card — ticket */
+.trip-card {
+  --stub-height: 2.7rem;
+  --notch: 11px;
+  position: relative;
+  display: block;
+  /* mask 가 box-shadow 를 잘라내므로 그림자는 drop-shadow 로 */
+  filter: drop-shadow(0 12px 22px rgba(33, 79, 96, 0.14));
+  transition: transform 0.25s ease, filter 0.25s ease;
+  animation: rise 0.55s ease both;
+}
+
+.trip-card:hover {
+  transform: translateY(-4px);
+  filter: drop-shadow(0 18px 30px rgba(33, 79, 96, 0.2));
+}
+
+.trip-card__ticket {
+  position: relative;
+  display: grid;
+  border-radius: 16px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, var(--gold), var(--gold-soft)) top / 100% 6px no-repeat,
+    #fff;
+  /* 절취선 위치 좌우에 반원 홈 */
+  -webkit-mask:
+    radial-gradient(circle at 0 calc(100% - var(--stub-height)), transparent var(--notch), #000 calc(var(--notch) + 0.5px)) left / 51% 100% no-repeat,
+    radial-gradient(circle at 100% calc(100% - var(--stub-height)), transparent var(--notch), #000 calc(var(--notch) + 0.5px)) right / 51% 100% no-repeat;
+  mask:
+    radial-gradient(circle at 0 calc(100% - var(--stub-height)), transparent var(--notch), #000 calc(var(--notch) + 0.5px)) left / 51% 100% no-repeat,
+    radial-gradient(circle at 100% calc(100% - var(--stub-height)), transparent var(--notch), #000 calc(var(--notch) + 0.5px)) right / 51% 100% no-repeat;
+}
+
+.trip-card__content {
+  padding: 1.05rem 1.3rem 0.9rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.trip-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trip-card__label {
+  color: var(--sea);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.trip-card__type {
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(245, 210, 210, 0.75);
+  color: #8a4545;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.trip-card__title {
+  margin: 0;
+  /* font-family: var(--font-display); */
+  font-size: 1.21rem;
+  letter-spacing: -0.02em;
+}
+
+.trip-card__route {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 12px;
+  background: var(--foam);
+}
+
+.trip-card__route div {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.trip-card__route small {
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+}
+
+.trip-card__route strong {
+  color: var(--sea-deep);
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.trip-card__route-end {
+  text-align: right;
+}
+
+.trip-card__route-icon {
+  color: var(--sea);
+  font-size: 1.02rem;
+}
+
+.trip-card__stub {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  height: var(--stub-height);
+  padding: 0 1.3rem;
+  /* 절취선 */
+  border-top: 2px dashed rgba(47, 107, 128, 0.2);
+  /* background: var(--sand); */
+}
+
+.trip-card__count {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.79rem;
+}
+
+.trip-card__barcode {
+  flex-shrink: 0;
+  width: 64px;
+  height: 18px;
+  opacity: 0.55;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--ink) 0 2px,
+    transparent 2px 4px,
+    var(--ink) 4px 5px,
+    transparent 5px 8px
+  );
+}
+
+/* 지역 | 같이 간 사람 / 목적(전체 폭) */
+.trip-card__meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem 0.8rem;
+  margin: 0;
+}
+
+/* 항목마다 "라벨  값" 한 줄 */
+.trip-card__meta div {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem;
+  align-items: baseline;
+  min-width: 0;
+}
+
+.trip-card__meta-full {
+  grid-column: 1 / -1;
+}
+
+.trip-card__meta dt {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.73rem;
+}
+
+.trip-card__meta dd {
+  margin: 0;
+  font-weight: 500;
+  /* 긴 값은 한 줄 말줄임 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.empty-state {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  padding: 2.5rem 1.5rem;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.65);
+}
+
+/* Detail */
+.page--detail {
+  width: 100%;
+  margin: 0;
+  padding: 0 0 4rem;
+}
+
+.page--missing {
+  width: min(920px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1.25rem 0 4rem;
+  min-height: 60vh;
+  display: grid;
+  place-content: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.page--login {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+}
+
+.login-card {
+  width: min(380px, 100%);
+  display: grid;
+  gap: 1rem;
+  padding: 1.75rem 1.5rem;
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: 0 18px 40px rgba(33, 79, 96, 0.12);
+  animation: rise 0.55s ease both;
+}
+
+.login-card h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--sea-deep);
+}
+
+.login-form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.login-form label {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.login-form span {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.login-form .btn {
+  margin-top: 0.3rem;
+}
+
+.login-form .btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.login-card__note {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+  text-align: center;
+}
+
+.login-card__switch {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--sea);
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.detail-top {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  width: 100%;
+  /* background: rgba(189, 227, 195, 0.92); */
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 8px 24px rgba(33, 79, 96, 0.04);
+}
+
+.detail-top__inner {
+  width: min(920px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 0.85rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.detail-top__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.detail-body {
+  width: min(920px, calc(100% - 2rem));
+  margin: 1.25rem auto 0;
+}
+
+.back-link {
+  /* font-family: var(--font-display); */
+  font-weight: 600;
+  color: var(--sea);
+}
+
+.save-flash {
+  font-size: 0.79rem;
+  color: var(--sea);
+  animation: fade-pulse 1.4s ease both;
+}
+
+.meta-panel {
+  display: grid;
+  gap: 1.5rem;
+  padding: 1.6rem 1.5rem 1.7rem;
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 4px);
+  /* background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgb(186 211 248 / 88%)), var(--gold); */
+  background: #fff;
+  box-shadow: var(--shadow);
+  animation: rise 0.55s ease both;
+}
+
+.meta-panel__intro h1 {
+  margin: 0.35rem 0 0.4rem;
+  /* font-family: var(--font-display); */
+  font-size: clamp(1.67rem, 3.72vw, 2.42rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.meta-panel__range {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.meta-form {
+  display: grid;
+  gap: 1rem;
+}
+
+/* ===== 정보 화면 (TripViewPage) ===== */
+.trip-view {
+  display: grid;
+  /* minmax(0, 1fr): 넓은 스케줄 표가 열을 늘리지 않고 .schedule-table__wrap 안에서 가로 스크롤되게 */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.1rem;
+}
+
+.trip-view .timeline-section {
+  margin-top: 1rem;
+}
+
+/* 상단 티켓 — 목록 카드와 같은 방식: mask 로 절취선 양 끝 반원 홈, 그림자는 바깥 wrap 의 drop-shadow */
+.trip-view__ticket-wrap {
+  filter: drop-shadow(0 16px 30px rgba(33, 79, 96, 0.14));
+  animation: rise 0.55s ease both;
+}
+
+.trip-view__ticket {
+  --stub-height: 3.2rem;
+  --notch: 13px;
+  border-radius: calc(var(--radius) + 4px);
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, var(--gold), var(--gold-soft)) top / 100% 8px no-repeat,
+    #fff;
+  -webkit-mask:
+    radial-gradient(circle at 0 calc(100% - var(--stub-height)), transparent var(--notch), #000 calc(var(--notch) + 0.5px)) left / 51% 100% no-repeat,
+    radial-gradient(circle at 100% calc(100% - var(--stub-height)), transparent var(--notch), #000 calc(var(--notch) + 0.5px)) right / 51% 100% no-repeat;
+  mask:
+    radial-gradient(circle at 0 calc(100% - var(--stub-height)), transparent var(--notch), #000 calc(var(--notch) + 0.5px)) left / 51% 100% no-repeat,
+    radial-gradient(circle at 100% calc(100% - var(--stub-height)), transparent var(--notch), #000 calc(var(--notch) + 0.5px)) right / 51% 100% no-repeat;
+}
+
+.trip-view__ticket-main {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1.6rem 1.6rem 1.3rem;
+}
+
+.trip-view__title {
+  margin: 0;
+  font-size: clamp(1.58rem, 3.72vw, 2.23rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--sea-deep);
+}
+
+.trip-view__route {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  border-radius: 16px;
+  background: var(--foam);
+}
+
+.trip-view__route > div {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.trip-view__route small {
+  color: var(--ink-soft);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+}
+
+.trip-view__route strong {
+  color: var(--sea-deep);
+  font-size: clamp(1.02rem, 2.42vw, 1.35rem);
+  font-variant-numeric: tabular-nums;
+}
+
+.trip-view__route span {
+  color: var(--sea);
+  font-size: 0.79rem;
+}
+
+.trip-view__route-end {
+  text-align: right;
+}
+
+.trip-view__route .trip-view__route-mid {
+  justify-items: center;
+  gap: 0.2rem;
+}
+
+.trip-view__route-mid span {
+  font-size: 1.4rem;
+}
+
+.trip-view__route-mid small {
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--sea-deep);
+  font-weight: 700;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.trip-view__ticket-stub {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  height: var(--stub-height);
+  padding: 0 1.6rem;
+  border-top: 2px dashed rgba(47, 107, 128, 0.2);
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+}
+
+.trip-view__ticket-stub strong {
+  color: var(--sea-deep);
+}
+
+.trip-view__ticket-stub .trip-card__barcode {
+  margin-left: auto;
+}
+
+/* 정보 카드 4개 — 지역 / 같이 간 사람 | 교통수단 / 목적 세 줄 */
+.trip-view__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  animation: rise 0.6s 0.05s ease both;
+}
+
+/* 지역(1번째)·목적(4번째)은 한 줄 전체 */
+.trip-view__fact:nth-child(1),
+.trip-view__fact:nth-child(4) {
+  grid-column: 1 / -1;
+}
+
+.trip-view__fact {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 0.65rem;
+  align-items: center;
+  min-width: 0;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.trip-view__fact-icon {
+  grid-row: 1 / 3;
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 12px;
+  background: var(--mist);
+  font-size: 1.07rem;
+}
+
+.trip-view__fact:nth-child(1) .trip-view__fact-icon {
+  background: rgba(245, 210, 210, 0.55);
+}
+
+.trip-view__fact:nth-child(2) .trip-view__fact-icon {
+  background: rgba(248, 247, 186, 0.7);
+}
+
+.trip-view__fact:nth-child(3) .trip-view__fact-icon {
+  background: rgba(163, 204, 218, 0.45);
+}
+
+.trip-view__fact:nth-child(4) .trip-view__fact-icon {
+  background: rgba(189, 227, 195, 0.6);
+}
+
+.trip-view__fact dt {
+  color: var(--ink-soft);
+  font-size: 0.71rem;
+}
+
+.trip-view__fact dd {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+/* 숙소 / 기타 예약 카드 (정보 화면, 목적 아래) */
+.trip-view__bookings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  animation: rise 0.6s 0.08s ease both;
+}
+
+.booking-card {
+  min-width: 0;
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.booking-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.6rem;
+  color: var(--sea-deep);
+  font-size: 0.93rem;
+}
+
+.booking-card h3 small {
+  padding: 0.05rem 0.5rem;
+  border-radius: 999px;
+  background: var(--mist);
+  color: var(--sea);
+  font-size: 0.68rem;
+}
+
+.booking-card__icon {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 10px;
+  background: rgba(248, 247, 186, 0.7);
+  font-size: 0.93rem;
+}
+
+.booking-card--reservations .booking-card__icon {
+  background: rgba(245, 210, 210, 0.55);
+}
+
+.booking-card ul {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.booking-card li {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+  padding: 0.55rem 0 0.55rem 0.75rem;
+  border-left: 3px solid var(--foam);
+}
+
+.booking-card li + li {
+  margin-top: 0.4rem;
+}
+
+.booking-card li strong,
+.booking-card li span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.booking-card li span {
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+}
+
+.booking-card .trip-view__empty {
+  margin: 0;
+}
+
+/* 교통 티켓 — 탑승권 */
+.trip-view__passes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  animation: rise 0.6s 0.1s ease both;
+}
+
+.trip-view__leg h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.55rem;
+  color: var(--sea-deep);
+  font-size: 0.93rem;
+}
+
+.trip-view__leg h3 small {
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(245, 210, 210, 0.75);
+  color: #8a4545;
+  font-size: 0.68rem;
+}
+
+.trip-view__leg ol {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pass {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.pass__route {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+}
+
+.pass__route > div {
+  display: grid;
+  min-width: 0;
+}
+
+.pass__route small {
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+}
+
+.pass__route strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--sea-deep);
+  font-size: 0.98rem;
+}
+
+.pass__route div > span {
+  color: var(--sea);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.pass__end {
+  text-align: right;
+}
+
+.pass__icon {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: var(--foam);
+}
+
+.pass__stub {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  border-top: 2px dashed rgba(47, 107, 128, 0.16);
+  background: var(--mist);
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.trip-view__empty {
+  margin: 0;
+  padding: 0.9rem;
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.trip-view__toggle {
+  flex-wrap: nowrap;
+}
+
+.trip-view__toggle .segmented__item {
+  /* 글자를 버튼 정중앙에 — 줄 높이를 1로 맞추고 flex 로 가운데 정렬 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.79rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ===== 준비물·메모 화면 (TripNotesPage) — 준비물 | 메모 ===== */
+.notes-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 1rem;
+  animation: rise 0.55s 0.05s ease both;
+}
+
+.notes-panel {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.1rem 1.1rem 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(90deg, var(--gold), var(--gold-soft)) top / 100% 5px no-repeat,
+    #fff;
+}
+
+/* 메모 쪽은 띠 색을 바꿔 구분 */
+.notes-panel + .notes-panel {
+  background:
+    linear-gradient(90deg, var(--foam), var(--sand)) top / 100% 5px no-repeat,
+    #fff;
+}
+
+.notes-panel__head {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.notes-panel__head h2 {
+  margin: 0;
+  color: var(--sea-deep);
+  font-size: 1.07rem;
+}
+
+.notes-panel__count {
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  background: var(--mist);
+  color: var(--sea);
+  font-size: 0.73rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* .booking__add 와 같이 "+" 글자 대신 막대 두 개로 그려 원 정중앙에 둔다 */
+.notes-panel__add {
+  position: relative;
+  width: 2.1rem;
+  height: 2.1rem;
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #fff;
+  font-size: 0;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.notes-panel__add::before,
+.notes-panel__add::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.85rem;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+
+.notes-panel__add::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.notes-panel__add:hover {
+  background: #8fc0d1;
+  transform: rotate(90deg);
+}
+
+.notes-progress {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--mist);
+}
+
+.notes-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--foam), var(--gold));
+  transition: width 0.3s ease;
+}
+
+.notes-panel__empty {
+  margin: 0;
+  padding: 1.1rem;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.notes-list {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 준비물 한 줄: [체크] [입력] [×] */
+.check-row,
+.memo-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.4rem 0.35rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.memo-row {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  border-left: 3px solid var(--foam);
+}
+
+.check-row:focus-within,
+.memo-row:focus-within {
+  border-color: rgba(47, 107, 128, 0.45);
+  box-shadow: 0 0 0 3px rgba(47, 107, 128, 0.1);
+}
+
+.check-row__box {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0;
+  accent-color: var(--sea);
+  cursor: pointer;
+}
+
+.check-row__text,
+.memo-row__text {
+  width: 100%;
+  padding: 0.45rem 0.2rem;
+  border: 0;
+  background: transparent;
+  outline: none;
+  font-size: 0.88rem;
+}
+
+.memo-row__text {
+  line-height: 1.5;
+  field-sizing: content;
+  min-height: 3.2em;
+}
+
+/* 챙긴 준비물: 흐리게 + 취소선 */
+.check-row--done {
+  background: var(--mist);
+}
+
+.check-row--done .check-row__text {
+  color: var(--ink-soft);
+  text-decoration: line-through;
+}
+
+.notes-row__remove {
+  width: 1.9rem;
+  height: 1.9rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.notes-row__remove:hover {
+  background: rgba(180, 35, 24, 0.08);
+  color: var(--danger);
+}
+
+/* ===== 비용 화면 (TripCostPage) ===== */
+.cost-intro {
+  display: grid;
+  gap: 0.45rem;
+  animation: rise 0.5s ease both;
+}
+
+.cost-days {
+  display: grid;
+  gap: 1rem;
+  animation: rise 0.55s 0.05s ease both;
+}
+
+.cost-day {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.cost-day__head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 1.1rem 0.6rem;
+}
+
+.cost-day__head strong {
+  color: var(--sea-deep);
+  font-size: 0.98rem;
+}
+
+.cost-day .timeline-view__empty {
+  margin: 0.2rem 1.1rem 0.9rem;
+}
+
+.cost-day__list {
+  margin: 0;
+  padding: 0 1.1rem;
+  list-style: none;
+}
+
+/* 장소명·메모 | 금액 */
+.cost-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem 0;
+}
+
+.cost-row + .cost-row {
+  border-top: 1px solid var(--line);
+}
+
+.cost-row__text {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.cost-row__text strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 항목 금액은 글자만 — 핑크 알약 모양은 합계(.cost-day__total, 전체 합계)에서 쓴다 */
+.cost-row__amount {
+  color: var(--ink);
+  font-size: 0.84rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cost-row__amount--empty {
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+/* 일자 합계 — 절취선 아래 */
+.cost-day__total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+  padding: 0.75rem 1.1rem;
+  border-top: 2px dashed rgba(47, 107, 128, 0.16);
+  background: var(--mist);
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.cost-day__total strong {
+  color: var(--sea-deep);
+  font-size: 0.98rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 전체 합계 티켓 (.trip-view__ticket 의 mask 절취선 재사용) */
+.cost-total {
+  --stub-height: 4.2rem;
+}
+
+.cost-total__main {
+  display: grid;
+  gap: 0.7rem;
+  padding: 1.4rem 1.6rem 1.2rem;
+}
+
+.cost-total__days {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cost-total__days li {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink-soft);
+  font-size: 0.84rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.trip-view__ticket-stub.cost-total__stub {
+  justify-content: space-between;
+  background: var(--foam);
+  color: var(--sea-deep);
+  font-size: 0.93rem;
+  font-weight: 700;
+}
+
+/* 전체값 / 1인 인당값 */
+.cost-total__sum {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.2rem 0.5rem;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.cost-total__sum strong {
+  font-size: clamp(1.3rem, 3.26vw, 1.67rem);
+  white-space: nowrap;
+}
+
+.cost-total__slash {
+  color: rgba(33, 79, 96, 0.4);
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.cost-total__each {
+  color: var(--sea-deep);
+  font-size: 0.86rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.cost-total__each b {
+  font-size: 1.05rem;
+}
+
+/* 제목 아래: 1인당 금액 계산 인원 [−] 2명 [+] */
+.cost-people {
+  display: flex;
+  align-items: center;
+  justify-self: start;
+  gap: 0.4rem;
+  margin-top: 0.2rem;
+  padding: 0.3rem 0.4rem 0.3rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.cost-people strong {
+  min-width: 2.6rem;
+  color: var(--sea-deep);
+  font-size: 0.9rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.cost-people button {
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--sea);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.cost-people button:hover:not(:disabled) {
+  border-color: rgba(47, 107, 128, 0.35);
+  background: var(--mist);
+}
+
+.cost-people button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* 여행 전 예약 (DAY 1 위) — 교통 / 숙소 / 기타 예약 묶음 */
+.timeline-view__day-badge.cost-day__badge--booking {
+  background: var(--sand);
+}
+
+/* 카드 전체: DAY 카드와 구분되게 위쪽 버터→핑크 띠 + 옅은 버터 바탕 */
+.cost-day--booking {
+  background:
+    linear-gradient(90deg, var(--sand), var(--gold-soft)) top / 100% 6px no-repeat,
+    linear-gradient(180deg, rgba(248, 247, 186, 0.22), #fff 70%);
+}
+
+.cost-day--booking .cost-day__head {
+  padding-top: 1.2rem;
+}
+
+/* 교통 / 숙소 / 기타 예약 — 각각 작은 카드 */
+.cost-groups {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.15rem 1.1rem 1rem;
+}
+
+.cost-group {
+  --group-tint: rgba(163, 204, 218, 0.22);
+  --group-accent: var(--gold);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--group-accent);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.cost-group--lodgings {
+  --group-tint: rgba(189, 227, 195, 0.3);
+  --group-accent: var(--foam);
+}
+
+.cost-group--reservations {
+  --group-tint: rgba(245, 210, 210, 0.3);
+  --group-accent: var(--gold-soft);
+}
+
+/* 묶음 머리: [아이콘 교통 2건] ……… (합계) / 1인 */
+.cost-group__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem 0.75rem;
+  margin: 0;
+  padding: 0.6rem 0.85rem;
+  background: var(--group-tint);
+  color: var(--sea-deep);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.cost-group__name {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.cost-group__icon {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+}
+
+.cost-group__name small {
+  color: var(--ink-soft);
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+/* 세부 내역 — 머리 아래 들여 쓴 줄 */
+.cost-group .cost-day__list {
+  padding: 0 0.85rem;
+}
+
+.cost-group .cost-row {
+  padding: 0.55rem 0 0.55rem 0.4rem;
+}
+
+.cost-group .cost-row__text strong {
+  font-weight: 500;
+}
+
+/* 항목별 토탈 — (전체값 핑크 알약) / 1인 인당값 */
+.cost-group__sum {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.15rem 0.4rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.cost-group__sum strong {
+  padding: 0.15rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(245, 210, 210, 0.75);
+  color: #8a4545;
+  font-size: 0.84rem;
+  white-space: nowrap;
+}
+
+.cost-group__slash {
+  color: rgba(33, 79, 96, 0.35);
+  font-weight: 400;
+}
+
+.cost-group__each {
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 읽기 전용 타임라인 (TimelineView) — 시간 · 점 · 내용 */
+.timeline-view {
+  display: grid;
+  gap: 1rem;
+}
+
+.timeline-view__day {
+  padding: 1rem 1.1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.timeline-view__day-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.9rem;
+}
+
+.timeline-view__day-badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #1d3d48;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.timeline-view__day-head strong {
+  color: var(--sea-deep);
+  font-size: 0.98rem;
+}
+
+.timeline-view__day-head small {
+  margin-left: auto;
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+}
+
+.timeline-view__empty {
+  margin: 0;
+  padding: 0.9rem;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.timeline-view__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline-view__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 6.6rem 1rem minmax(0, 1fr);
+  gap: 0.6rem;
+  padding-bottom: 1rem;
+}
+
+.timeline-view__item:last-child {
+  padding-bottom: 0;
+}
+
+/* 점과 점을 잇는 세로선 */
+.timeline-view__item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 1.1rem;
+  bottom: 0.1rem;
+  left: calc(6.6rem + 0.6rem + 0.5rem - 1px);
+  width: 2px;
+  background: rgba(163, 204, 218, 0.55);
+}
+
+.timeline-view__time {
+  padding-top: 0.1rem;
+  color: var(--sea);
+  font-size: 0.79rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.timeline-view__dot {
+  width: 0.85rem;
+  height: 0.85rem;
+  margin: 0.3rem auto 0;
+  border: 3px solid var(--sea);
+  border-radius: 50%;
+  background: #fff;
+}
+
+.timeline-view__content {
+  display: grid;
+  gap: 0.25rem;
+  justify-items: start;
+  min-width: 0;
+}
+
+.timeline-view__title {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.5rem;
+}
+
+.timeline-view__title strong {
+  font-size: 0.93rem;
+}
+
+.timeline-view__title small {
+  color: var(--ink-soft);
+  font-size: 0.73rem;
+}
+
+/* 간략메모 — 세부 내용 박스 (왼쪽 블루 띠 + MEMO 라벨) */
+.timeline-view__memo {
+  display: grid;
+  gap: 0.3rem;
+  justify-self: stretch;
+  margin-top: 0.2rem;
+  padding: 0.55rem 0.8rem 0.6rem;
+  border-left: 3px solid var(--gold);
+  border-radius: 4px 12px 12px 4px;
+  background: var(--mist);
+}
+
+.timeline-view__memo p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.timeline-view__memo ul {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline-view__memo li {
+  position: relative;
+  padding-left: 0.9rem;
+  color: var(--ink);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+/* 항목 앞 작은 점 */
+.timeline-view__memo li::before {
+  content: '';
+  position: absolute;
+  top: 0.6em;
+  left: 0.15rem;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--sea);
+  opacity: 0.55;
+}
+
+.meta-form label,
+.modal__form label {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.meta-form span,
+.modal__form span {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.meta-form small {
+  color: var(--ink-soft);
+  font-size: 0.73rem;
+}
+
+.meta-form input,
+.modal__form input,
+.modal__form textarea,
+.map-picker__search input,
+.login-form input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.75rem 0.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.meta-form input:focus,
+.modal__form input:focus,
+.modal__form textarea:focus,
+.map-picker__search input:focus,
+.login-form input:focus {
+  border-color: rgba(47, 107, 128, 0.45);
+  box-shadow: 0 0 0 3px rgba(47, 107, 128, 0.12);
+}
+
+/* 기간: [시작일] ~ [종료일] [달력] (DateRangeInput) */
+.date-range {
+  --date-row-height: 2.95rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.5rem;
+}
+
+.meta-form .date-range__sep {
+  display: grid;
+  place-items: center;
+  height: var(--date-row-height);
+  color: var(--ink-soft);
+}
+
+.date-range__picker {
+  display: grid;
+  place-items: center;
+  width: var(--date-row-height);
+  height: var(--date-row-height);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--sea);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.date-range__picker svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.date-range__picker:hover,
+.date-range__picker--open {
+  border-color: rgba(47, 107, 128, 0.35);
+  background: var(--foam);
+}
+
+/* .meta-form .date-input input {
+  height: var(--date-row-height);
+} */
+
+.date-input {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.date-input--invalid input {
+  border-color: var(--danger);
+}
+
+.date-input__error {
+  color: var(--danger) !important;
+  font-size: 0.71rem;
+}
+
+/* 달력 팝업 (Calendar) — body 로 포털, 문서 좌표 absolute */
+.calendar {
+  position: absolute;
+  z-index: 70;
+  width: 296px;
+  padding: 0.85rem 0.85rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 18px 40px rgba(33, 79, 96, 0.18);
+  animation: fade-in 0.15s ease both;
+}
+
+.calendar__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.calendar__head strong {
+  color: var(--sea-deep);
+  font-size: 0.91rem;
+}
+
+.calendar__nav {
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--sea);
+  font-size: 1.12rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.calendar__nav:hover {
+  background: var(--foam);
+}
+
+.calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  /* 가로 간격 0 — 기간 띠가 끊기지 않게 */
+  gap: 2px 0;
+}
+
+.calendar__weekday {
+  padding: 0.3rem 0;
+  color: var(--ink-soft);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.calendar__weekday--sun,
+.calendar__day--sun {
+  color: #c47a7a;
+}
+
+.calendar__weekday--sat {
+  color: var(--sea);
+}
+
+.calendar__day {
+  aspect-ratio: 1;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.calendar__day:hover:not(.calendar__day--selected) {
+  background: var(--foam);
+}
+
+.calendar__day--today {
+  border-color: var(--gold);
+  font-weight: 700;
+}
+
+.calendar__day--selected {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #1d3d48;
+  font-weight: 700;
+}
+
+/* 시작일 ~ 종료일 사이: 칸을 이어 띠처럼 보이게 */
+.calendar__day--in-range {
+  border-radius: 0;
+  background: rgba(163, 204, 218, 0.28);
+}
+
+.calendar__day--range-start {
+  border-radius: 10px 0 0 10px;
+}
+
+.calendar__day--range-end {
+  border-radius: 0 10px 10px 0;
+}
+
+.calendar__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.55rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--line);
+}
+
+.calendar__hint {
+  color: var(--sea);
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.timeline-section {
+  margin-top: 2rem;
+  animation: rise 0.65s 0.08s ease both;
+}
+
+.timeline-section__head {
+  margin-bottom: 1rem;
+}
+
+.timeline-section__head h2 {
+  margin: 0 0 0.35rem;
+  /* font-family: var(--font-display); */
+  font-size: 1.44rem;
+}
+
+.timeline-section__head p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+}
+
+.timeline-section__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.timeline-section__title h2 {
+  margin: 0;
+}
+
+/* Meta form: segmented choices & tickets */
+.meta-form__field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.segmented {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.segmented__item {
+  flex: 1 1 0;
+  min-width: 72px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.65rem 0.8rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.segmented__item:hover {
+  border-color: rgba(47, 107, 128, 0.35);
+}
+
+.segmented__item--active {
+  /* border-color: var(--sand); */
+  background: var(--foam);
+  /* color: #fff; */
+}
+
+.meta-form__tickets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+  padding: 0.9rem;
+  border: 1px solid rgba(47, 107, 128, 0.18);
+  border-radius: 14px;
+  /* 입력 박스 구분 — 더스티 블루(#A3CCDA) 옅게 */
+  background: rgba(163, 204, 218, 0.16);
+  animation: fade-in 0.2s ease both;
+}
+
+/* 티켓 세부 입력 (TicketFields) — 가는 편 | 오는 편 */
+.ticket-leg {
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.ticket-leg legend {
+  padding: 0;
+  margin-bottom: 0.2rem;
+  color: var(--sea-deep);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.ticket-seg {
+  display: grid;
+  gap: 0.55rem;
+}
+
+/* 경유가 있을 때 구간 사이 구분 */
+.ticket-seg + .ticket-seg {
+  padding-top: 0.7rem;
+  border-top: 1px dashed var(--line);
+}
+
+.ticket-seg__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.meta-form .ticket-seg__head span {
+  color: var(--sea);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.ticket-seg__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem 0.6rem;
+}
+
+.meta-form .ticket-seg__grid span {
+  font-size: 0.74rem;
+}
+
+.meta-form .ticket-seg__grid input {
+  padding: 0.6rem 0.75rem;
+}
+
+.ticket-leg__add {
+  justify-self: start;
+}
+
+/* 숙소 / 기타 예약 입력 (BookingFields) — 제목 옆 + 로 줄 추가 */
+.booking {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.booking__head {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.booking__head strong {
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.meta-form .booking__count {
+  padding: 0.05rem 0.5rem;
+  border-radius: 999px;
+  background: var(--mist);
+  color: var(--sea);
+  font-size: 0.69rem;
+  font-weight: 700;
+}
+
+/* 글꼴의 "+" 는 세로 위치가 글꼴마다 달라 원 중앙에서 어긋난다 → 글자는 숨기고 막대 두 개로 그린다 */
+.booking__add {
+  position: relative;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #fff;
+  font-size: 0;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.booking__add::before,
+.booking__add::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.75rem;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+
+.booking__add::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.booking__add:hover {
+  background: #8fc0d1;
+  transform: rotate(90deg);
+}
+
+.booking__empty {
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  border: 1px dashed rgba(47, 107, 128, 0.22);
+  border-radius: 12px;
+  background: rgba(163, 204, 218, 0.1);
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+}
+
+/* 이름 | 주소(메모) | 금액 | × */
+.booking__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr) minmax(0, 0.8fr) auto;
+  align-items: end;
+  gap: 0.55rem;
+  padding: 0.75rem 0.8rem;
+  border: 1px solid rgba(47, 107, 128, 0.18);
+  border-radius: 14px;
+  /* 티켓 박스(.meta-form__tickets)와 같은 배경 */
+  background: rgba(163, 204, 218, 0.16);
+  animation: fade-in 0.2s ease both;
+}
+
+.meta-form .booking__row span {
+  font-size: 0.74rem;
+}
+
+.meta-form .booking__row input {
+  padding: 0.6rem 0.75rem;
+}
+
+.booking__remove {
+  margin-bottom: 0.35rem;
+}
+
+/* Place tags */
+.tag {
+  display: inline-block;
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  background: var(--sand);
+  color: var(--sea);
+  font-size: 0.73rem;
+  font-weight: 600;
+}
+
+.tag--gold {
+  background: rgba(245, 210, 210, 0.75);
+  color: #8a4545;
+}
+
+/* Modal: time & cost */
+.modal__row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 0.9rem;
+}
+
+.time-range,
+.cost-input {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.time-range input {
+  min-width: 0;
+}
+
+/* Schedule table */
+.schedule-table__wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+}
+
+.schedule-table th,
+.schedule-table td {
+  padding: 0.6rem;
+  border-bottom: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  vertical-align: top;
+  text-align: left;
+}
+
+.schedule-table tr > :first-child {
+  border-left: 0;
+}
+
+.schedule-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.schedule-table thead th {
+  min-width: 140px;
+  background: var(--gold);
+  color: var(--sea-deep);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.schedule-table__day {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.schedule-table .schedule-table__time {
+  width: 72px;
+  min-width: 72px;
+  color: var(--sea);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.schedule-table__time--empty {
+  color: var(--ink-soft) !important;
+  font-weight: 400 !important;
+}
+
+.schedule-entry {
+  display: grid;
+  gap: 0.15rem;
+  width: 100%;
+  margin-bottom: 0.35rem;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.schedule-entry:last-child {
+  margin-bottom: 0;
+}
+
+.schedule-entry:hover {
+  border-color: rgba(47, 107, 128, 0.45);
+}
+
+/* 정보 화면: 눌러도 수정되지 않는 읽기 전용 항목 */
+.schedule-entry--static {
+  cursor: default;
+}
+
+.schedule-entry--static:hover {
+  border-color: var(--line);
+}
+
+.schedule-entry small {
+  color: var(--ink-soft);
+  font-size: 0.73rem;
+}
+
+.schedule-entry .schedule-entry__time {
+  color: var(--sea);
+  font-weight: 600;
+}
+
+.schedule-entry .schedule-entry__memo {
+  color: var(--sea);
+  white-space: pre-line;
+}
+
+.schedule-table__empty {
+  padding: 1.5rem !important;
+  color: var(--ink-soft);
+  text-align: center !important;
+}
+
+.timeline {
+  display: grid;
+  gap: 1rem;
+}
+
+.day-column {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.78);
+  padding: 1rem;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.day-column--over {
+  border-color: rgba(163, 204, 218, 0.9);
+  background: rgba(248, 247, 186, 0.4);
+}
+
+.day-column__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.day-column__header h3 {
+  margin: 0;
+  /* font-family: var(--font-display); */
+  font-size: 1.07rem;
+}
+
+.day-column__list {
+  display: grid;
+  gap: 0.65rem;
+  min-height: 64px;
+}
+
+.day-column__empty {
+  margin: 0;
+  padding: 1rem;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  color: var(--ink-soft);
+  font-size: 0.84rem;
+  text-align: center;
+}
+
+.place-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.place-item--dragging {
+  opacity: 0.45;
+}
+
+.place-item--overlay {
+  box-shadow: var(--shadow);
+  cursor: grabbing;
+}
+
+.place-item__handle {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 8px;
+  /* background: var(--gold); */
+  color: var(--sea);
+  cursor: grab;
+  touch-action: none;
+}
+
+/* 1줄: 장소명 | 시간대, 2줄: 간략메모(작게). 각 줄은 넘치면 말줄임 */
+/* 정보 화면: 손잡이·수정 버튼 없이 본문만 */
+.place-item--static {
+  grid-template-columns: 1fr;
+}
+
+.place-item__body {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.place-item__line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.place-item__body h4 {
+  flex-shrink: 1;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.95rem;
+}
+
+/* 장소명 옆 짧은 지역 ("충북 충주시", "파리 프랑스") — 좁으면 장소명보다 먼저 줄어든다 */
+.place-item__area {
+  flex-shrink: 2;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--ink-soft);
+  font-size: 0.71rem;
+}
+
+.place-item__sep {
+  flex-shrink: 0;
+  color: rgba(47, 107, 128, 0.35);
+}
+
+.place-item__time {
+  flex-shrink: 0;
+  color: var(--sea);
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 간략메모 — 정보 화면 .timeline-view__memo 와 같은 박스 (한 줄 + 말줄임은 유지) */
+.place-item__memo {
+  margin: 0.2rem 0 0;
+  padding: 0.3rem 0.65rem;
+  overflow: hidden;
+  border-left: 3px solid var(--gold);
+  border-radius: 4px 10px 10px 4px;
+  background: var(--mist);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--ink);
+  font-size: 0.74rem;
+}
+
+/* 버튼도 줄바꿈 없이 항상 같은 줄 오른쪽에 */
+.place-item__actions {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  gap: 0.4rem;
+  justify-content: flex-end;
+}
+
+.place-item__actions .text-btn {
+  white-space: nowrap;
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(33, 79, 96, 0.48);
+  backdrop-filter: blur(4px);
+  animation: fade-in 0.2s ease both;
+}
+
+.modal {
+  width: min(640px, 100%);
+  max-height: min(92vh, 900px);
+  overflow: auto;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 28px 60px rgba(33, 79, 96, 0.28);
+  animation: modal-in 0.28s ease both;
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 1rem;
+  padding: 1.25rem 1.25rem 0.75rem;
+}
+
+.modal__eyebrow {
+  margin: 0 0 0.25rem;
+  color: var(--sea);
+  font-size: 0.79rem;
+  font-weight: 600;
+}
+
+.modal__header h2 {
+  margin: 0;
+  /* font-family: var(--font-display); */
+  font-size: 1.3rem;
+}
+
+.modal__form {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem 1.25rem 1.35rem;
+}
+
+.modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+}
+
+/* 삭제는 왼쪽으로 떨어뜨려 저장 버튼과 헷갈리지 않게 */
+.modal__actions .btn--danger {
+  margin-right: auto;
+}
+
+.btn--danger {
+  background: var(--gold-soft);
+  border-color: var(--gold-soft);
+  color: #8a4545;
+  box-shadow: none;
+}
+
+.btn--danger:hover {
+  background: rgba(180, 35, 24, 0.08);
+}
+
+.btn--danger-solid {
+  background: var(--gold-soft);
+  color: #8a4545;
+}
+
+
+/* 앱 전용 alert/confirm (DialogProvider) — 장소 모달(z-index 50) 위에 뜬다 */
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(33, 79, 96, 0.4);
+  backdrop-filter: blur(3px);
+  animation: fade-in 0.15s ease both;
+}
+
+.dialog {
+  width: min(360px, 100%);
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.4rem 1.3rem 1.1rem;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 24px 50px rgba(33, 79, 96, 0.28);
+  animation: modal-in 0.22s ease both;
+}
+
+.dialog__title {
+  margin: 0;
+  font-size: 1.02rem;
+  color: var(--sea-deep);
+}
+
+.dialog__message {
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.55;
+  /* 메시지 안의 \n 을 줄바꿈으로 */
+  white-space: pre-line;
+}
+
+.dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.form-error {
+  margin: 0;
+  color: var(--danger);
+  font-size: 0.82rem;
+}
+
+.storage-error {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: rgba(180, 35, 24, 0.08);
+  color: var(--danger);
+  font-size: 0.84rem;
+}
+
+.map-picker {
+  padding: 0 1.25rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.map-picker__search {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+}
+
+.map-picker__search button {
+  border: 0;
+  border-radius: 12px;
+  padding: 0 1rem;
+  background: var(--sea);
+  color: #fff;
+  cursor: pointer;
+}
+
+.map-picker__results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.map-picker__results button {
+  width: 100%;
+  display: grid;
+  gap: 0.15rem;
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 0.7rem 0.85rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+.map-picker__results li:last-child button {
+  border-bottom: 0;
+}
+
+.map-picker__results button:hover {
+  background: var(--foam);
+}
+
+.map-picker__results strong {
+  font-size: 0.88rem;
+}
+
+.map-picker__results span {
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+}
+
+.map-picker__canvas {
+  position: relative;
+  /* Leaflet 패널(z-index 400~1000)이 모달의 다른 요소 위로 올라오지 않게 가둔다 */
+  z-index: 0;
+  isolation: isolate;
+  height: 220px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--foam);
+}
+
+.map-picker__loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--ink-soft);
+}
+
+.map-picker__hint {
+  margin: 0;
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+}
+
+.map-fallback {
+  margin: 0 1.25rem;
+  padding: 1.1rem 1rem;
+  border-radius: 14px;
+  background: var(--foam);
+  border: 1px dashed var(--line);
+}
+
+.map-fallback__title {
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+}
+
+.map-fallback__desc {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fade-pulse {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* 태블릿~모바일: 상단 고정 header 의 버튼(준비물·메모 / 수정 / 삭제 / 저장)을 작게 */
+@media (max-width: 1024px) {
+  .detail-top__actions {
+    gap: 0.4rem;
+  }
+
+  .detail-top__actions .btn {
+    padding: 0.45rem 0.85rem;
+    border-radius: 12px;
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 720px) {
+  /* 좁은 화면: 전체값 / 인당값이 두 줄이 될 수 있어 절취선 아래를 높인다 */
+  .cost-total {
+    --stub-height: 5.6rem;
+  }
+
+  .trip-view__ticket-stub.cost-total__stub {
+    gap: 0.6rem;
+  }
+
+  .detail-top__actions .btn {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.78rem;
+  }
+
+  /* iOS 사파리는 16px 미만 입력칸에 포커스하면 화면을 확대한다 */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  .trip-view__bookings {
+    grid-template-columns: 1fr;
+  }
+
+  /* 숙소·예약 입력: 이름 / 주소(메모) 각 한 줄, 금액 + × */
+  .booking__row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .booking__row > label:not(:nth-of-type(3)) {
+    grid-column: 1 / -1;
+  }
+
+  /* 좁은 화면: 선택 두 개를 한 줄에, 제목 검색은 아래 줄 전체 */
+  .trip-search {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .trip-search__query {
+    grid-column: 1 / -1;
+  }
+
+  .hero {
+    /* min-height: 35vh; */
+    place-items: end start;
+  }
+
+  .hero__inner {
+    margin-bottom: 3.2rem;
+  }
+/* 
+  .list-main {
+    margin-top: -1.8rem;
+  } */
+
+  .meta-form__tickets,
+  .trip-view__passes,
+  .notes-board,
+  .modal__row {
+    grid-template-columns: 1fr;
+  }
+
+  /* 정보 화면: 좁은 화면 */
+  .trip-view__ticket-main {
+    padding: 1.3rem 1.1rem 1.1rem;
+  }
+
+  .trip-view__route {
+    gap: 0.5rem;
+    padding: 0.8rem 0.9rem;
+  }
+
+  .trip-view__ticket-stub {
+    gap: 0.9rem;
+    padding: 0 1.1rem;
+    font-size: 0.76rem;
+  }
+
+  .trip-view__ticket-stub .trip-card__barcode {
+    display: none;
+  }
+
+  .timeline-view__item {
+    grid-template-columns: 4.6rem 1rem minmax(0, 1fr);
+    gap: 0.45rem;
+  }
+
+  .timeline-view__item:not(:last-child)::after {
+    left: calc(4.6rem + 0.45rem + 0.5rem - 1px);
+  }
+
+  .timeline-view__time {
+    font-size: 0.71rem;
+    white-space: normal;
+  }
+
+  /* .detail-top__inner {
+    flex-direction: column;
+    align-items: stretch;
+  } */
+
+  .detail-top__actions {
+    justify-content: flex-end;
+  }
+
+  .day-column__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* 좁은 화면에서도 한 줄 유지: 여백·버튼만 줄임 */
+  .place-item {
+    gap: 0.5rem;
+    padding: 0.55rem 0.65rem;
+  }
+
+  .place-item__actions {
+    gap: 0.25rem;
+  }
+
+  .place-item__actions .text-btn {
+    padding: 0.28rem 0.55rem;
+  }
+}
