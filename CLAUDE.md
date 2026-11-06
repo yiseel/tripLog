@@ -62,7 +62,7 @@ React 19 + TypeScript + Vite, react-router-dom 7, @dnd-kit(드래그), uuid. 스
 ## 스타일 / 주의사항
 
 - **색상**: `:root` 변수로 관리. 사용자 지정 파스텔 팔레트 `#F5D2D2`(핑크, `--gold-soft`·배지/비용 태그·배경), `#F8F7BA`(버터, `--sand`), `#BDE3C3`(세이지, `--foam`), `#A3CCDA`(더스티 블루, `--gold`·주 버튼). 팔레트가 모두 밝아서 글자·기본 버튼·테두리는 `#A3CCDA`를 진하게 한 `--sea: #2f6b80`(`--sea-deep: #214f60`)을 쓴다. 변수 이름(`sea`, `gold`, `sand`)은 예전 팔레트에서 온 것이라 실제 색과 다르다. 하드코딩된 `rgba(...)`도 같은 색 계열에 맞춰져 있으니 팔레트를 바꿀 땐 함께 바꿀 것.
-- **폰트**: Google Fonts 링크 한 줄(`index.html`). 본문 `--font-body`(Chiron GoRound TC), 목록 hero 로고 `.brand`만 `--font-display`(Chango + 흰 테두리 `text-shadow`). hero 배경은 `src/assets/hero-bg.png` 일러스트 + 왼쪽을 밝히는 `.hero__veil`.
+- **폰트**: Google Fonts 링크 한 줄(`index.html`). 본문 `--font-body`(Chiron GoRound TC), 목록 hero 로고 `.hero .brand`만 `--font-display`(Chango + 흰 테두리 `text-shadow`). hero 배경은 `src/assets/hero-bg.png` 일러스트 + 왼쪽을 밝히는 `.hero__veil`.
 - 파스텔 위에는 흰 글씨 대비가 낮다 → `.btn--primary`는 `#A3CCDA` 배경 + 짙은 글씨 `#1d3d48`, 핑크 배지/태그 글씨는 `#8a4545`, 필수 표시 `em`은 `#c47a7a`.
 - `.meta-panel`, `.timeline-section` 등은 `rise` 애니메이션(`fill-mode: both`)으로 `transform`이 남아 있다. 그 안에서 `position: fixed` 요소는 위치가 어긋나므로 dnd-kit `DragOverlay`는 `createPortal(..., document.body)`로 렌더링한다. 새 오버레이/팝업도 같은 방식으로.
 - 목록 페이지는 `.page--list`가 화면 높이에 고정되고 `.list-scroll`만 스크롤된다(hero, `.hero-cta`는 고정). `.hero`는 `overflow: hidden`이라 경계에 걸치는 버튼은 hero 밖 `.hero-cta`에 두고 음수 margin으로 올렸다.
