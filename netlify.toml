@@ -16,3 +16,14 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# 서비스 워커는 배포할 때마다 바로 받아야 한다. 오래 캐시되면 새 버전이 안 깔린다.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
