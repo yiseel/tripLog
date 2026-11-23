@@ -222,7 +222,8 @@ em {
 }
 
 .hero,
-.hero-cta {
+.hero-cta,
+.list-summary {
   flex-shrink: 0;
 }
 
@@ -406,6 +407,21 @@ em {
   z-index: 2;
 }
 
+/* 전체 여행 개수 · 페이지 위치 — 스크롤 밖에 고정 */
+.list-summary {
+  width: min(1100px, calc(100% - 2.5rem));
+  margin: 1.25rem auto 0;
+}
+
+.list-summary .trip-search__count {
+  margin: 0;
+}
+
+/* 개수 줄이 위에 있으면 목록은 조금만 띄움(카드 그림자 여유) */
+.list-summary + .list-scroll .list-main {
+  margin-top: 1rem;
+}
+
 .trip-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -502,6 +518,43 @@ em {
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.18em;
+}
+
+.trip-card__badges {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* 여행 상태 배지 — 예정: 버터 */
+.trip-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  background: var(--sand);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* 여행 중: 세이지 + 깜빡이는 점 */
+.trip-card__status--ongoing {
+  background: var(--foam);
+  color: #2e5e3a;
+}
+
+.trip-card__status--ongoing i {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: #3f8a52;
+  animation: status-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.75); }
 }
 
 .trip-card__type {
@@ -1064,6 +1117,87 @@ em {
   margin: 0;
 }
 
+/* 링크가 있는 예약: 왼쪽 이름·메모 | 오른쪽 링크 버튼 */
+.booking-card li.has-links {
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 0.75rem;
+  align-items: center;
+}
+
+.booking-card li.has-links > :not(.booking-card__links) {
+  grid-column: 1;
+}
+
+.booking-card__links {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid rgba(47, 107, 128, 0.25);
+  border-radius: 999px;
+  background: rgba(163, 204, 218, 0.22);
+  color: var(--sea);
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.booking-card__links:hover {
+  background: rgba(163, 204, 218, 0.45);
+}
+
+.booking-card__links small {
+  min-width: 1.1rem;
+  padding: 0 0.3rem;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 0.66rem;
+  text-align: center;
+}
+
+/* 링크 목록 팝업 */
+.links-dialog {
+  width: min(420px, 100%);
+}
+
+.links-dialog__list {
+  display: grid;
+  gap: 0.4rem;
+  max-height: 50vh;
+  /* grid 항목은 기본 min-width:auto 라 긴 주소만큼 늘어나 가로 스크롤이 생긴다 → 0으로 막고 말줄임 */
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.links-dialog__list li {
+  min-width: 0;
+}
+
+.links-dialog__list a {
+  display: block;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(163, 204, 218, 0.12);
+  color: var(--sea);
+  font-size: 0.84rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.links-dialog__list a:hover {
+  background: rgba(163, 204, 218, 0.3);
+}
+
 /* 교통 티켓 — 탑승권 */
 .trip-view__passes {
   display: grid;
@@ -1188,6 +1322,24 @@ em {
 }
 
 /* ===== 준비물·메모 화면 (TripNotesPage) — 준비물 | 메모 ===== */
+/* 모바일 전용 탭 — 넓은 화면에서는 숨기고 두 칸을 나란히 보여 준다
+   (.segmented 의 display: flex 가 뒤에 있어 .segmented.notes-tabs 로 우선순위를 올림) */
+.segmented.notes-tabs {
+  display: none;
+  flex-wrap: nowrap;
+}
+
+.notes-tabs .segmented__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 0.85rem;
+  color: var(--sea-deep);
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 .notes-board {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2360,6 +2512,37 @@ em {
   margin-bottom: 0.35rem;
 }
 
+/* 기타 예약 링크 — 줄 맨 아래 전체 폭. 링크 칸들 + "링크 추가" */
+.booking__links {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.booking__link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.booking__link-add {
+  justify-self: start;
+  padding: 0.3rem 0.75rem;
+  border: 1px dashed rgba(47, 107, 128, 0.35);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--sea);
+  font: inherit;
+  font-size: 0.76rem;
+  cursor: pointer;
+}
+
+.booking__link-add:hover {
+  border-style: solid;
+  background: #fff;
+}
+
 /* Place tags */
 .tag {
   display: inline-block;
@@ -3046,6 +3229,17 @@ em {
   .list-main {
     margin-top: -1.8rem;
   } */
+
+  /* 준비물·메모: 탭으로 한 칸씩 */
+  .segmented.notes-tabs {
+    display: flex;
+    margin-bottom: 0.8rem;
+  }
+
+  .notes-board--checklist .notes-panel--notes,
+  .notes-board--notes .notes-panel--checklist {
+    display: none;
+  }
 
   .meta-form__tickets,
   .trip-view__passes,

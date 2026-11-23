@@ -18,7 +18,7 @@ import type {
   TripMeta,
   TripType,
 } from '../types/trip'
-import { hasLodging, hasReservation } from '../utils/costs'
+import { hasLodging, hasReservation, reservationLinks } from '../utils/costs'
 import { autoTitle, formatDateRange } from '../utils/dates'
 import { EMPTY_TICKETS, normalizeTickets } from '../utils/tickets'
 
@@ -133,6 +133,14 @@ export function TripDetailPage({ api, auth }: Props) {
     return filled.length > 0 || saved !== undefined ? filled : undefined
   }
 
+  /** 빈 링크 칸은 저장하지 않는다(입력 중인 화면 state는 그대로) */
+  const cleanReservationLinks = (item: Reservation): Reservation => {
+    const links = reservationLinks(item)
+    const cleaned: Reservation = { ...item, links }
+    if (links.length === 0) delete cleaned.links
+    return cleaned
+  }
+
   const persistMeta = async (next?: Partial<TripMeta>, showError = false) => {
     const payload: TripMeta = {
       title: next?.title ?? title,
@@ -145,7 +153,11 @@ export function TripDetailPage({ api, auth }: Props) {
       tickets: next?.tickets ?? tickets,
       purpose: next?.purpose ?? purpose,
       lodgings: filledOrUndefined(next?.lodgings ?? lodgings, hasLodging, trip.lodgings),
-      reservations: filledOrUndefined(next?.reservations ?? reservations, hasReservation, trip.reservations),
+      reservations: filledOrUndefined(
+        (next?.reservations ?? reservations).map(cleanReservationLinks),
+        hasReservation,
+        trip.reservations,
+      ),
     }
     // 필수값(지역·시작일·종료일)이 비어 있으면 저장하지 않는다
     const error = validateMeta(payload)
@@ -404,6 +416,7 @@ export function TripDetailPage({ api, auth }: Props) {
             placeholders={{ name: '예: 아르떼뮤지엄 입장권', detail: '예: 성인 2매, 현장 발권', cost: '예: 34,000' }}
             items={reservations}
             createItem={(itemId) => ({ id: itemId, name: '', memo: '' })}
+            withLinks
             onChange={setReservations}
             onCommit={(next) => persistMeta({ reservations: next })}
           />

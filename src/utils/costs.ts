@@ -27,7 +27,14 @@ export function hasLodging(item: Lodging): boolean {
 }
 
 export function hasReservation(item: Reservation): boolean {
-  return Boolean(item.name.trim() || item.memo.trim() || item.cost !== undefined)
+  return Boolean(
+    item.name.trim() || item.memo.trim() || item.cost !== undefined || reservationLinks(item).length > 0,
+  )
+}
+
+/** 빈 칸을 뺀 기타 예약 링크 */
+export function reservationLinks(item: Reservation): string[] {
+  return (item.links ?? []).map((link) => link.trim()).filter(Boolean)
 }
 
 /** 교통 티켓(금액 있는 구간) · 숙소 · 기타 예약. 내용이 없는 묶음은 뺀다 */

@@ -72,6 +72,13 @@ export function TripListPage({ api, auth }: Props) {
     scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  // 카드 목록이 보이는 상태(불러오는 중·로그인 필요·빈 목록·검색 결과 없음이 아님)
+  const showList =
+    !(auth.loading || (api.loading && api.trips.length === 0)) &&
+    !(auth.available && !auth.user) &&
+    api.trips.length > 0 &&
+    filtered.length > 0
+
   return (
     <div className="page page--list">
       <header className="hero">
@@ -136,7 +143,24 @@ export function TripListPage({ api, auth }: Props) {
         </button>
       </div>
 
-      {/* hero / hero-cta 는 고정, 이 영역만 스크롤 */}
+      {/* 개수 · 페이지 위치도 고정 — 카드 목록이 보일 때만 */}
+      {showList && (
+        <div className="list-summary">
+          <div className="trip-search__count">
+            <p>
+              {year || tripType || query.trim() ? '검색 결과' : '전체 여행'}
+              <strong>{filtered.length}</strong>
+            </p>
+            {totalPages > 1 && (
+              <span>
+                {currentPage} / {totalPages} 페이지
+              </span>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* hero / hero-cta / list-summary 는 고정, 이 영역만 스크롤 */}
       <div className="list-scroll" ref={scrollRef}>
         <main className="list-main">
           {api.error && (
@@ -180,17 +204,6 @@ export function TripListPage({ api, auth }: Props) {
             </div>
           ) : (
             <>
-              <div className="trip-search__count">
-                <p>
-                  {year || tripType || query.trim() ? '검색 결과' : '전체 여행'}
-                  <strong>{filtered.length}</strong>
-                </p>
-                {totalPages > 1 && (
-                  <span>
-                    {currentPage} / {totalPages} 페이지
-                  </span>
-                )}
-              </div>
               <div className="trip-grid">
                 {pageTrips.map((trip) => (
                   <TripCard key={trip.id} trip={trip} />

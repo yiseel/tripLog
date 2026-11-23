@@ -114,12 +114,16 @@ function asLodgings(value: unknown): Lodging[] | undefined {
 
 function asReservations(value: unknown): Reservation[] | undefined {
   if (!Array.isArray(value)) return undefined
-  return value.map((item: Record<string, unknown>) => ({
-    id: String(item?.id ?? uuid()),
-    name: asText(item?.name),
-    memo: asText(item?.memo),
-    cost: asCost(item?.cost),
-  }))
+  return value.map((item: Record<string, unknown>) => {
+    const links = Array.isArray(item?.links) ? item.links.map(asText).filter(Boolean) : []
+    return {
+      id: String(item?.id ?? uuid()),
+      name: asText(item?.name),
+      memo: asText(item?.memo),
+      cost: asCost(item?.cost),
+      ...(links.length > 0 ? { links } : {}),
+    }
+  })
 }
 
 function toTripRow(trip: Trip, userId: string): TripRow {

@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { LinksDialog } from '../components/LinksDialog'
 import { ScheduleTable } from '../components/ScheduleTable'
 import { TimelineView } from '../components/TimelineView'
 import { tripPageFallback } from '../components/TripPageFallback'
 import type { AuthApi } from '../hooks/useAuth'
 import type { TripsApi } from '../hooks/useTrips'
 import type { TicketSegment, Tickets, Transport } from '../types/trip'
-import { hasLodging, hasReservation, tripTotalCost } from '../utils/costs'
+import { hasLodging, hasReservation, reservationLinks, tripTotalCost } from '../utils/costs'
 import {
   autoTitle,
   dayCount,
@@ -69,6 +70,8 @@ export function TripViewPage({ api, auth }: Props) {
   const navigate = useNavigate()
   const trip = api.getTrip(id)
   const [view, setView] = useState<'timeline' | 'schedule'>('timeline')
+  // 기타 예약 링크 팝업 — 열린 예약의 이름과 링크
+  const [linksOf, setLinksOf] = useState<{ title: string; links: string[] } | null>(null)
 
   const fallback = tripPageFallback(api, auth, trip)
   if (fallback || !trip) return fallback
@@ -93,14 +96,24 @@ export function TripViewPage({ api, auth }: Props) {
       icon: '🏨',
       label: '숙소',
       empty: '등록된 숙소가 없습니다',
-      items: lodgings.map((item) => ({ id: item.id, name: item.name || '숙소', detail: item.address })),
+      items: lodgings.map((item) => ({
+        id: item.id,
+        name: item.name || '숙소',
+        detail: item.address,
+        links: [] as string[],
+      })),
     },
     {
       key: 'reservations',
       icon: '🎟',
       label: '기타 예약',
       empty: '등록된 예약이 없습니다',
-      items: reservations.map((item) => ({ id: item.id, name: item.name || '예약', detail: item.memo })),
+      items: reservations.map((item) => ({
+        id: item.id,
+        name: item.name || '예약',
+        detail: item.memo,
+        links: reservationLinks(item),
+      })),
     },
   ]
 
@@ -205,9 +218,20 @@ export function TripViewPage({ api, auth }: Props) {
               ) : (
                 <ul>
                   {group.items.map((item) => (
-                    <li key={item.id}>
+                    <li key={item.id} className={item.links.length > 0 ? 'has-links' : undefined}>
                       <strong title={item.name}>{item.name}</strong>
                       {item.detail && <span title={item.detail}>{item.detail}</span>}
+                      {/* 링크가 있으면 오른쪽 끝에 버튼 → 링크 목록 팝업 */}
+                      {item.links.length > 0 && (
+                        <button
+                          type="button"
+                          className="booking-card__links"
+                          onClick={() => setLinksOf({ title: item.name, links: item.links })}
+                          aria-label={`${item.name} 링크 ${item.links.length}개 보기`}
+                        >
+                          🔗 링크{item.links.length > 1 && <small>{item.links.length}</small>}
+                        </button>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -273,6 +297,10 @@ export function TripViewPage({ api, auth }: Props) {
           )}
         </section>
       </div>
+
+      {linksOf && (
+        <LinksDialog title={linksOf.title} links={linksOf.links} onClose={() => setLinksOf(null)} />
+      )}
     </div>
   )
 }

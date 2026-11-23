@@ -50,6 +50,8 @@ export interface Reservation {
   memo: string
   /** 원 */
   cost?: number
+  /** 예약 확인·바우처 등 관련 링크(URL). 나중에 추가된 필드라 optional */
+  links?: string[]
 }
 
 /** 예전 데이터는 편마다 자유 텍스트였다 — 읽을 때 normalizeTickets 로 구간 배열로 바꾼다 */

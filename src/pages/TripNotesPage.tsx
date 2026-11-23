@@ -35,6 +35,8 @@ function NotesBoard({ api, trip }: { api: TripsApi; trip: Trip }) {
   /** + 로 막 추가한 칸 — 그 칸에 바로 커서를 둔다 */
   const [focusId, setFocusId] = useState('')
   const [savedFlash, setSavedFlash] = useState(false)
+  /** 모바일(좁은 화면)에서 보여 줄 탭 — 넓은 화면은 탭 없이 둘 다 보인다 */
+  const [tab, setTab] = useState<'checklist' | 'notes'>('checklist')
 
   const save = async (patch: Pick<Trip, 'checklist'> | Pick<Trip, 'notes'>) => {
     const ok = await api.updateTrip(trip.id, patch)
@@ -89,9 +91,29 @@ function NotesBoard({ api, trip }: { api: TripsApi; trip: Trip }) {
           )}
         </div>
 
-        <div className="notes-board">
+        <div className="segmented notes-tabs" role="tablist" aria-label="준비물 · 메모">
+          {(
+            [
+              ['checklist', '준비물'],
+              ['notes', '메모'],
+            ] as const
+          ).map(([key, label]) => (
+            <button
+              key={key}
+              type="button"
+              role="tab"
+              aria-selected={tab === key}
+              className={`segmented__item${tab === key ? ' segmented__item--active' : ''}`}
+              onClick={() => setTab(key)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        <div className={`notes-board notes-board--${tab}`}>
           {/* 왼쪽: 준비물 체크리스트 */}
-          <section className="notes-panel">
+          <section className="notes-panel notes-panel--checklist">
             <header className="notes-panel__head">
               <h2>준비물</h2>
               <span className="notes-panel__count">
@@ -169,7 +191,7 @@ function NotesBoard({ api, trip }: { api: TripsApi; trip: Trip }) {
           </section>
 
           {/* 오른쪽: 메모 */}
-          <section className="notes-panel">
+          <section className="notes-panel notes-panel--notes">
             <header className="notes-panel__head">
               <h2>메모</h2>
               <span className="notes-panel__count">{filled(notes).length}개</span>
