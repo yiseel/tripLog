@@ -2050,8 +2050,16 @@ em {
 }
 
 .meta-form label,
-.modal__form label {
+.modal__form label,
+.modal__field {
   display: grid;
+  gap: 0.4rem;
+}
+
+/* 장소 모달 종류: [대분류] [세부] */
+.category-select {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.4rem;
 }
 
@@ -2070,6 +2078,7 @@ em {
 .meta-form input,
 .modal__form input,
 .modal__form textarea,
+.modal__form select,
 .map-picker__search input,
 .login-form input {
   width: 100%;
@@ -2084,6 +2093,7 @@ em {
 .meta-form input:focus,
 .modal__form input:focus,
 .modal__form textarea:focus,
+.modal__form select:focus,
 .map-picker__search input:focus,
 .login-form input:focus {
   border-color: rgba(47, 107, 128, 0.45);
@@ -2798,6 +2808,36 @@ em {
 }
 
 /* 장소명 옆 짧은 지역 ("충북 충주시", "파리 프랑스") — 좁으면 장소명보다 먼저 줄어든다 */
+/* 장소 분류 태그 (점심·소품샵·호텔 …) — 편집·정보 타임라인 공용.
+   색은 저장값이 아닌 대분류(utils/category.ts)로: 식사 핑크 / 관광 세이지 / 숙소 블루 / 기타 버터 */
+.place-tag {
+  flex-shrink: 0;
+  align-self: center;
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
+  background: var(--gold-soft);
+  color: #8a4545;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.place-tag--tour {
+  background: var(--foam);
+  color: #2f5e3a;
+}
+
+.place-tag--stay {
+  background: var(--gold);
+  color: #1d3d48;
+}
+
+.place-tag--etc {
+  background: var(--sand);
+  color: #6b6420;
+}
+
 .place-item__area {
   flex-shrink: 2;
   min-width: 0;

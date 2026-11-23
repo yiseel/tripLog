@@ -2,6 +2,7 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import type { Place } from '../types/trip'
 import { shortArea } from '../utils/address'
+import { categoryGroup } from '../utils/category'
 import { formatCost, formatTimeRange } from '../utils/dates'
 
 interface Props {
@@ -15,11 +16,14 @@ export function PlaceItemBody({ place }: { place: Place }) {
   const cost = formatCost(place.cost)
   const area = shortArea(place)
   // 전체 주소·비용은 카드에 표시하지 않고 툴팁으로만 보여준다
-  const fullText = [place.name, time, place.memo, place.address, cost].filter(Boolean).join(' · ')
+  const fullText = [place.category, place.name, time, place.memo, place.address, cost].filter(Boolean).join(' · ')
 
   return (
     <div className="place-item__body" title={fullText}>
       <div className="place-item__line">
+        {place.category && (
+          <span className={`place-tag place-tag--${categoryGroup(place.category)}`}>{place.category}</span>
+        )}
         <h4>{place.name}</h4>
         {area && <span className="place-item__area">{area}</span>}
         {time && (

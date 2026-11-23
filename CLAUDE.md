@@ -47,7 +47,7 @@ React 19 + TypeScript + Vite, react-router-dom 7, @dnd-kit(드래그), uuid. 스
 ## 데이터 규칙
 
 - `Trip.days: Place[][]` — 인덱스 0 = 1일차. 날짜 변경은 `updateTrip`이 `syncDays`로 맞춘다.
-- 나중에 추가된 필드는 모두 **optional**이다: `Trip.tripType`(`domestic`/`overseas`), `transport`(`car`/`bus`/`train`/`plane`), `tickets`(`outbound`/`inbound` 구간 배열 — 아래 참고), `purpose`(목적, 자유 텍스트 — DB `trips.purpose`), `Place.startTime`/`endTime`(`HH:MM`), `cost`(원, number). 기존 저장 데이터와 호환되도록 읽을 때 기본값(`?? 'domestic'` 등)으로 처리하고, 새 필드도 optional로 추가할 것.
+- 나중에 추가된 필드는 모두 **optional**이다: `Trip.tripType`(`domestic`/`overseas`), `transport`(`car`/`bus`/`train`/`plane`), `tickets`(`outbound`/`inbound` 구간 배열 — 아래 참고), `purpose`(목적, 자유 텍스트 — DB `trips.purpose`), `Place.startTime`/`endTime`(`HH:MM`), `cost`(원, number), `Place.category`(종류 세부값 — 점심·소품샵·호텔 등. 장소 모달 장소명 다음 칸에서 [대분류 select] [세부 select(+직접입력)]으로 고른다. 대분류 식사/관광/숙소/기타는 `utils/category.ts`의 `CATEGORY_GROUPS`이고 **저장하지 않으며** `categoryGroup(세부값)`으로 거꾸로 찾는다(목록에 없는 값 = 기타). 편집·정보 타임라인 장소명 앞 `.place-tag--{meal|tour|stay|etc}`로 대분류별 색 표시. DB `places.category`, `tripsDb`는 값이 있을 때만 보냄). 기존 저장 데이터와 호환되도록 읽을 때 기본값(`?? 'domestic'` 등)으로 처리하고, 새 필드도 optional로 추가할 것.
 - 티켓 입력란은 교통수단이 자동차가 아닐 때만 보인다.
 - "기간" 항목은 `DateRangeInput` = `[시작일 DateInput] ~ [종료일 DateInput] [달력 버튼]`. 각 칸은 직접 입력(`20261030`, `2026.10.30` 등 → blur/Enter 때 `YYYY-MM-DD`)이고, 종료일 칸은 시작일보다 앞이면 거부한다. 달력은 하나(`Calendar`, body 포털)로 첫 클릭 = 시작일, 두 번째 클릭 = 종료일(시작일보다 앞을 누르면 새 시작일)을 고르고, 둘 다 고른 뒤에야 `onRangeChange`로 한 번에 반영한다. 브라우저 기본 date picker는 쓰지 않는다.
 - 새 여행(`emptyTrip`)은 시작·종료일이 `''`이다. 날짜가 비어 있으면 일차 헤더는 "1일차"만 표시.

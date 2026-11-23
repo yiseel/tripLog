@@ -58,6 +58,8 @@ interface PlaceRow {
   cost: number | null
   /** 해외 장소만 — places.area 칸이 없는 DB에서도 국내 장소는 저장되도록 값이 있을 때만 보낸다 */
   area?: string | null
+  /** 장소 분류 — places.category 칸이 없는 DB에서도 저장되도록 값이 있을 때만 보낸다 */
+  category?: string | null
 }
 
 function fail(error: { message: string } | null): void {
@@ -167,6 +169,7 @@ function toPlaceRows(trip: Trip): PlaceRow[] {
       end_time: place.endTime || null,
       cost: place.cost == null ? null : Math.round(place.cost),
       ...(place.area ? { area: place.area } : {}),
+      ...(place.category ? { category: place.category } : {}),
     })),
   )
 }
@@ -183,6 +186,7 @@ function toPlace(row: PlaceRow): Place {
     endTime: row.end_time || undefined,
     cost: row.cost ?? undefined,
     area: row.area || undefined,
+    category: row.category || undefined,
   }
 }
 

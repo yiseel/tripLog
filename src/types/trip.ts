@@ -12,6 +12,8 @@ export interface Place {
   cost?: number
   /** 짧은 지역 표시 "파리 프랑스" — 해외 지도(Geoapify)에서 고를 때만 저장. 없으면 주소에서 계산 */
   area?: string
+  /** 장소 분류 "점심", "소품샵", "호텔" 등 자유 텍스트. 나중에 추가된 필드라 optional */
+  category?: string
 }
 
 export type TripType = 'domestic' | 'overseas'
@@ -124,4 +126,5 @@ export interface PlaceDraft {
   endTime?: string
   cost?: number
   area?: string
+  category?: string
 }

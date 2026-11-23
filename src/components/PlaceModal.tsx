@@ -1,9 +1,13 @@
 import { useEffect, useId, useState, type FormEvent } from 'react'
 import { useDialog } from '../hooks/useDialog'
 import type { Place, PlaceDraft } from '../types/trip'
+import { CATEGORY_GROUPS, categoryGroup, type CategoryGroup } from '../utils/category'
 import { normalizeTime, typingTime } from '../utils/time'
 import { GeoapifyMapPicker } from './GeoapifyMapPicker'
 import { KakaoMapPicker, type MapSelection } from './KakaoMapPicker'
+
+/** 세부 종류 셀렉트의 "직접입력" 값 */
+const CUSTOM = '__custom'
 
 interface Props {
   open: boolean
@@ -31,6 +35,10 @@ export function PlaceModal({ open, dayLabel, initial, overseas, region, onClose,
   const [endTime, setEndTime] = useState('')
   const [cost, setCost] = useState('')
   const [area, setArea] = useState<string | undefined>()
+  /** 종류: 대분류(색 구분용, 저장 안 함) / 세부 셀렉트 값(목록 값 또는 CUSTOM) / 직접입력 글자 */
+  const [catGroup, setCatGroup] = useState<CategoryGroup | ''>('')
+  const [catDetail, setCatDetail] = useState('')
+  const [catCustom, setCatCustom] = useState('')
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -44,6 +52,12 @@ export function PlaceModal({ open, dayLabel, initial, overseas, region, onClose,
     setEndTime(initial?.endTime ?? '')
     setCost(initial?.cost !== undefined ? String(initial.cost) : '')
     setArea(initial?.area)
+    const savedCategory = initial?.category ?? ''
+    const savedGroup = categoryGroup(savedCategory)
+    const listed = CATEGORY_GROUPS.some((group) => group.options.includes(savedCategory))
+    setCatGroup(savedGroup ?? '')
+    setCatDetail(savedGroup ? (listed ? savedCategory : CUSTOM) : '')
+    setCatCustom(listed ? '' : savedCategory)
     setError('')
   }, [open, initial])
 
@@ -79,6 +93,11 @@ export function PlaceModal({ open, dayLabel, initial, overseas, region, onClose,
       setError('시간은 11:20 처럼 00:00 ~ 23:59 사이로 입력해 주세요.')
       return
     }
+    const category = !catGroup ? '' : catDetail === CUSTOM ? catCustom.trim() : catDetail
+    if (catGroup && !category) {
+      setError(catDetail === CUSTOM ? '종류를 직접 입력해 주세요.' : '세부 종류를 골라 주세요.')
+      return
+    }
     if (start && end && end < start) {
       setError('종료 시간은 시작 시간 이후여야 합니다.')
       return
@@ -93,6 +112,7 @@ export function PlaceModal({ open, dayLabel, initial, overseas, region, onClose,
       endTime: end,
       cost: cost ? Number(cost) : undefined,
       area,
+      category: category || undefined,
     })
     onClose()
   }
@@ -143,6 +163,55 @@ export function PlaceModal({ open, dayLabel, initial, overseas, region, onClose,
               autoFocus
             />
           </label>
+          <div className="modal__field">
+            <span>종류</span>
+            <div className="category-select">
+              <select
+                value={catGroup}
+                onChange={(e) => {
+                  const next = e.target.value as CategoryGroup | ''
+                  setCatGroup(next)
+                  // 세부 목록이 없는 대분류만 바로 직접입력
+                  const options = CATEGORY_GROUPS.find((group) => group.key === next)?.options ?? []
+                  setCatDetail(next && options.length === 0 ? CUSTOM : '')
+                }}
+                aria-label="종류 대분류"
+              >
+                <option value="">선택 안 함</option>
+                {CATEGORY_GROUPS.map((group) => (
+                  <option key={group.key} value={group.key}>
+                    {group.label}
+                  </option>
+                ))}
+              </select>
+              {catGroup && (
+                <select
+                  value={catDetail}
+                  onChange={(e) => setCatDetail(e.target.value)}
+                  aria-label="세부 종류"
+                >
+                  <option value="" disabled>
+                    세부 선택
+                  </option>
+                  {CATEGORY_GROUPS.find((group) => group.key === catGroup)?.options.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                  <option value={CUSTOM}>직접입력</option>
+                </select>
+              )}
+            </div>
+            {catGroup && catDetail === CUSTOM && (
+              <input
+                value={catCustom}
+                onChange={(e) => setCatCustom(e.target.value)}
+                placeholder="예: 브런치, 시장, 게스트하우스"
+                maxLength={20}
+                aria-label="종류 직접입력"
+              />
+            )}
+          </div>
           <label>
             <span>장소 주소</span>
             <input

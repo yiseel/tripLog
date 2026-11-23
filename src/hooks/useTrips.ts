@@ -56,6 +56,7 @@ function placeFromDraft(draft: PlaceDraft, id: string): Place {
     endTime: draft.endTime || undefined,
     cost: draft.cost,
     area: draft.area?.trim() || undefined,
+    category: draft.category?.trim() || undefined,
   }
 }
 

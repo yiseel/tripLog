@@ -1,5 +1,6 @@
 import type { Place } from '../types/trip'
 import { shortArea } from '../utils/address'
+import { categoryGroup } from '../utils/category'
 import { addDays, formatShortDateWithWeekday, formatTimeRange } from '../utils/dates'
 
 interface Props {
@@ -56,6 +57,9 @@ export function TimelineView({ startDate, days }: Props) {
                     <span className="timeline-view__dot" aria-hidden="true" />
                     <div className="timeline-view__content" title={place.address || undefined}>
                       <div className="timeline-view__title">
+                        {place.category && (
+          <span className={`place-tag place-tag--${categoryGroup(place.category)}`}>{place.category}</span>
+        )}
                         <strong>{place.name}</strong>
                         {area && <small>{area}</small>}
                       </div>
